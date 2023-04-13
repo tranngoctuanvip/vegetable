@@ -25,7 +25,6 @@ public class CartController {
             throw new RuntimeException(e);
         }
     }
-
     @PostMapping("delete")
     public ResponseEntity<?> delete(@RequestParam List<Integer> id){
         try{
@@ -35,11 +34,18 @@ public class CartController {
            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @GetMapping("getAll")
     public ResponseEntity<?> getAll(@RequestParam Integer urid){
         try{
             return new ResponseEntity<>(cartService.getAll(urid),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("sum")
+    public ResponseEntity<?> total(@RequestParam Integer urid){
+        try {
+            return new ResponseEntity<>(cartService.total(urid),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

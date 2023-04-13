@@ -36,9 +36,6 @@ public class ProductServiceImpl implements ProductService {
             throw new MessageDescriptorFormatException("Name can't null");
         }
         pr.setImage(product.getImage());
-        if(product.getName().isEmpty() || product.getName() == null){
-            throw new MessageDescriptorFormatException("Product can't null");
-        }
         pr.setPrice(product.getPrice());
         pr.setQuality(product.getQuality());
         pr.setCreateTime(new Date());
@@ -54,6 +51,9 @@ public class ProductServiceImpl implements ProductService {
             Product pr = productReporitory.findById(prid).get();
             if(pr != null){
                 pr.setName(product.getName());
+                if(product.getName().isEmpty() || product.getName() == null){
+                    throw new MessageDescriptorFormatException("Name cannot null");
+                }
                 pr.setImage(product.getImage());
                 pr.setPrice(product.getPrice());
                 pr.setQuality(product.getQuality());

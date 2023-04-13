@@ -30,13 +30,13 @@ public class Order {
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     private Date orderDate; //ngày đặt hàng
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "YYY-MM-dd HH:mm")
-    private Date deliveryDate; //ngày giao hàng
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
+    private String deliveryDate; //ngày giao hàng
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "YYY-MM-dd HH:mm")
-    private Date dateOfReceiptOfGoods; //ngày nhận hàng
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
+    private String dateOfReceiptOfGoods; //ngày nhận hàng
 
     @Column(name = "orderStatus",length = 11)
     private Integer orderStatus;

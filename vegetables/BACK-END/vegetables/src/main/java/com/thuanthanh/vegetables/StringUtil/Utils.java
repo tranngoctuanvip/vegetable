@@ -2,6 +2,10 @@ package com.thuanthanh.vegetables.StringUtil;
 
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Utils {
     public String checkPhone(String str) {
         // Bieu thuc chinh quy mo ta dinh dang so dien thoai
@@ -14,7 +18,6 @@ public class Utils {
         }
         return str;
     }
-
     public String checkEmail(String str) {
         // Bieu thuc chinh quy mo ta dinh dang email
         String reg = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
@@ -25,5 +28,9 @@ public class Utils {
             throw new MessageDescriptorFormatException("Loi: Khong dung dinh dang!");
         }
         return str;
+    }
+    public String conVertDate(String date) throws ParseException {
+        Date Da = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        return String.valueOf(Da);
     }
 }

@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.Utilities;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service("OrderService")
 public class OrderServiceImpl implements OrderService {
@@ -22,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private CartRepository cartRepository;
 
-    Utils utils = new Utils();
+    private Utils utils = new Utils();
     @Override
     public Order add(Order order, Integer urid, Integer cartid) {
         try{
@@ -42,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getAll(Integer id) {
+    public List<Map<String,Object>> getAll(Integer id) {
         try {
             return orderRepository.getall(id);
         } catch (Exception e) {
@@ -51,16 +53,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void update(Order order, Integer id) {
+    public void update(Order order, Integer id) throws ParseException {
             Order or = orderRepository.findById(id).get();
             or.setOrderStatus(order.getOrderStatus());
-            or.setDateOfReceiptOfGoods(order.getDateOfReceiptOfGoods());
-            or.setDeliveryDate(order.getDeliveryDate());
+            or.setDateOfReceiptOfGoods(utils.conVertDate(order.getDateOfReceiptOfGoods()));
+            or.setDeliveryDate(utils.conVertDate(order.getDeliveryDate()));
             orderRepository.save(or);
     }
 
     @Override
-    public void delete(List<Integer> id) {
+    public void delete(Integer id) {
             try{
                 orderRepository.delete(id);
             } catch (Exception e) {

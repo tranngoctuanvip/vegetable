@@ -41,6 +41,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public Cart total(Integer urid) {
+        try{
+            return cartRepository.sumtotal(urid);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Cart> getAll(Integer urid) {
         try {
             List<Cart> carts = cartRepository.getall(urid);

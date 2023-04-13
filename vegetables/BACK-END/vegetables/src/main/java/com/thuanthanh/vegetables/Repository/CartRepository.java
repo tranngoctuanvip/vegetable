@@ -15,6 +15,8 @@ public interface CartRepository extends JpaRepository<Cart,Integer> {
     @Query(value = "\tselect * from cart c where c.status =1 and c.deleted =0 and c.user_id = :urid",nativeQuery = true)
     List<Cart> getall(@Param("urid") Integer urid);
 
+    @Query(value = "select Sum(c.sum) as 'Total' from cart c where c.user_id = :urid and c.deleted = 0 and c.status =1",nativeQuery = true)
+    Cart sumtotal(@Param("urid") Integer urid);
     @Modifying
     @Transactional
     @Query(value = "update cart set status = 0, deleted = 1 where  id in (:id) ",nativeQuery = true)

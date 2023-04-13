@@ -7,19 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("Order")
 public class OrderController {
     @Autowired
     private OrderService orderService;
-
     @PostMapping("add")
     public ResponseEntity<?> add(@RequestBody Order order, @Param("urid") Integer urid, @Param("cartid") Integer cartid){
         try{
@@ -31,20 +26,28 @@ public class OrderController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<?> update(@RequestBody Order order,Integer urid){
+    public ResponseEntity<?> update(@RequestBody Order order,Integer id){
         try {
-            orderService.update(order,urid);
-            return ResponseEntity.ok("update Order success");
+            orderService.update(order,id);
+            return ResponseEntity.ok("update Order success!");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @PostMapping("delete")
-    public ResponseEntity<?> cancel(@Param("urid") List<Integer> urid){
+    public ResponseEntity<?> cancel(@Param("urid") Integer urid){
         try{
             orderService.delete(urid);
-            return ResponseEntity.ok("cancel order success!");
+            return ResponseEntity.ok("Cancel order success!");
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("getall")
+    public ResponseEntity<?> getall(@RequestParam Integer urid){
+        try{
+            return new ResponseEntity<>(orderService.getAll(urid),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
