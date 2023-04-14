@@ -30,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void add(Product product, Integer id) {
+
         Product pr = new Product();
         pr.setName(product.getName());
         if(product.getName().isEmpty() || product.getName() == null){
