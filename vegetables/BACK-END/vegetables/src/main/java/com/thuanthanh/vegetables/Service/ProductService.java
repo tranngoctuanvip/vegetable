@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface ProductService {
     void delete(List<Integer> id);
-    void add(Product product, Integer id);
+    void add(Product product, Integer id,Integer cid);
     Product update(Product product, Integer prid);
     List<Map<String,Object>> search(String pname);
 }

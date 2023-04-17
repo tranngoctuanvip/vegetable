@@ -21,9 +21,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @PostMapping("add")
-    public ResponseEntity<?> save(@RequestBody Product product,@Param("id") Integer id, Principal principal){
+    public ResponseEntity<?> save(@RequestBody Product product,@Param("id") Integer id, @Param("cid") Integer cid){
         try{
-            productService.add(product,id);
+            productService.add(product,id,cid);
             return ResponseEntity.ok("Add product success!");
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -5,6 +5,8 @@ import com.thuanthanh.vegetables.Repository.CategoryRepository;
 import com.thuanthanh.vegetables.Repository.ProductReporitory;
 import com.thuanthanh.vegetables.Service.ProductService;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.Map;
 
 @Service("ProductService")
 public class ProductServiceImpl implements ProductService {
+    public static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
     @Autowired
     private ProductReporitory productReporitory;
     @Autowired
@@ -29,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void add(Product product, Integer id) {
+    public void add(Product product, Integer id,Integer cid) {
 
         Product pr = new Product();
         pr.setName(product.getName());
@@ -42,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
         pr.setCreateTime(new Date());
         pr.setStatus(1);
         pr.setDeleted(0);
-        pr.setCategoryId(categoryRepository.findById(id).get());
+        pr.setCategoryId(categoryRepository.findById(cid).get());
         productReporitory.save(pr);
     }
 
@@ -53,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
             if(pr != null){
                 pr.setName(product.getName());
                 if(product.getName().isEmpty() || product.getName() == null){
-                    throw new MessageDescriptorFormatException("Name cannot null");
+                    throw new MessageDescriptorFormatException("Name can not null");
                 }
                 pr.setImage(product.getImage());
                 pr.setPrice(product.getPrice());
@@ -65,7 +68,8 @@ public class ProductServiceImpl implements ProductService {
             }
             return productReporitory.save(pr);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 
