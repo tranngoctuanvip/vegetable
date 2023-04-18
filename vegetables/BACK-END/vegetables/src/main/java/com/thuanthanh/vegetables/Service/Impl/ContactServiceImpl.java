@@ -5,6 +5,8 @@ import com.thuanthanh.vegetables.Repository.ContactRepository;
 import com.thuanthanh.vegetables.Repository.UserRepository;
 import com.thuanthanh.vegetables.Service.ContactService;
 import com.thuanthanh.vegetables.StringUtil.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.Date;
 
 @Service("ContactService")
 public class ContactServiceImpl implements ContactService {
+    public static final Logger logger = LoggerFactory.getLogger(ContactServiceImpl.class);
     @Autowired
     private ContactRepository contactRepository;
     @Autowired
@@ -28,7 +31,8 @@ public class ContactServiceImpl implements ContactService {
             con.setUser(userRepository.findById(urid).get());
             return contactRepository.save(con);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 }

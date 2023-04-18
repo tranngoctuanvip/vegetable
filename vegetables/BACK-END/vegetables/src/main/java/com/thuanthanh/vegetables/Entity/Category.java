@@ -31,7 +31,8 @@ public class Category {
     private Integer status;
     @Column(name = "deleted",length = 10)
     private Integer deleted;
-
+    @Column(name = "parentId")
+    private Integer parentId;
     @JsonIgnore
     @OneToMany(mappedBy = "categoryId")
     private List<Product> products;

@@ -15,14 +15,14 @@ public class StatisticalController {
     @Autowired
     private StatisticalService statisticalService;
 
-    @GetMapping("month")
-    public ResponseEntity<?> getall(@Param("month") String month){
-        try{
-            return new ResponseEntity<>(statisticalService.getall(month), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @GetMapping("month")
+//    public ResponseEntity<?> getall(@Param("month") String month){
+//        try{
+//            return new ResponseEntity<>(statisticalService.getall(month), HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
     @GetMapping("all")
     public ResponseEntity<?> get(@Param("month") String month, @Param("quarter") String quarter, @Param("year") String year){
         try {

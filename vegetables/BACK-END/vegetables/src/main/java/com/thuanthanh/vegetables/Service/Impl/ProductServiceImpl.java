@@ -27,26 +27,29 @@ public class ProductServiceImpl implements ProductService {
         try {
             productReporitory.delete(id);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
         }
     }
 
     @Override
     public void add(Product product, Integer id,Integer cid) {
-
-        Product pr = new Product();
-        pr.setName(product.getName());
-        if(product.getName().isEmpty() || product.getName() == null){
-            throw new MessageDescriptorFormatException("Name can't null");
+        try {
+            Product pr = new Product();
+            pr.setName(product.getName());
+            if(product.getName().isEmpty() || product.getName() == null){
+                throw new MessageDescriptorFormatException("Name can't null");
+            }
+            pr.setImage(product.getImage());
+            pr.setPrice(product.getPrice());
+            pr.setQuality(product.getQuality());
+            pr.setCreateTime(new Date());
+            pr.setStatus(1);
+            pr.setDeleted(0);
+            pr.setCategoryId(categoryRepository.findById(cid).get());
+            productReporitory.save(pr);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
-        pr.setImage(product.getImage());
-        pr.setPrice(product.getPrice());
-        pr.setQuality(product.getQuality());
-        pr.setCreateTime(new Date());
-        pr.setStatus(1);
-        pr.setDeleted(0);
-        pr.setCategoryId(categoryRepository.findById(cid).get());
-        productReporitory.save(pr);
     }
 
     @Override
@@ -78,7 +81,18 @@ public class ProductServiceImpl implements ProductService {
         try{
           return productReporitory.search(pname);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> productsell() {
+        try {
+            return productReporitory.productsell();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return null;
         }
     }
 }

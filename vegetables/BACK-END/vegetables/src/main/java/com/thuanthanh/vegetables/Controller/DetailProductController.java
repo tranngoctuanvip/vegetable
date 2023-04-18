@@ -23,7 +23,7 @@ public class DetailProductController {
             detailProductService.add(detailProduct,prid);
             return ResponseEntity.ok("Add DetailProduct success!");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PutMapping("update")
@@ -32,7 +32,7 @@ public class DetailProductController {
             detailProductService.update(detailProduct,id);
             return ResponseEntity.ok("update DetailProduct success!");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping("delete")
@@ -41,13 +41,21 @@ public class DetailProductController {
             detailProductService.delete(id);
             return ResponseEntity.ok("Delete DetailProduct success!");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("getall")
     public ResponseEntity<?> getall(){
         try{
             return new ResponseEntity<>(detailProductService.getall(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("search")
+    public ResponseEntity<?> searchByDate(@Param("start") String start, @Param("end") String end,@RequestParam("size") Integer size,@RequestParam("limit") Integer limit){
+        try {
+            return new ResponseEntity<>(detailProductService.search(start,end,size,limit),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -2,9 +2,11 @@ package com.thuanthanh.vegetables.Repository;
 
 import com.thuanthanh.vegetables.Entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,10 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     List<Map<String,Object>> getall(@Param("urid") Integer urid);
     @Query(value = "update orderv set order_status = 0 where user_id = :urid",nativeQuery = true)
     void delete(Integer urid);
+    @Modifying
+    @Transactional
+    @Query(value = "update orderv set order_status = 2 where id in (:id)",nativeQuery = true)
+    void update_status(@Param("id") List<Integer> id);
 
     @Query(value = "select month(o.date_of_receipt_of_goods) as 'Tháng' , Sum(c.sum ) as 'Doanh thu'from orderv o join cart c on o.cart_id = c.id \n" +
             "     where o.order_status =2 and month (o.date_of_receipt_of_goods) = :month\n" +

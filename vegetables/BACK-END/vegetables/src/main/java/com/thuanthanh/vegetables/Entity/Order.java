@@ -32,11 +32,11 @@ public class Order {
 
 //    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 //    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
-    private String deliveryDate; //ngày giao hàng
+    private Date deliveryDate; //ngày giao hàng
 
 //    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 //    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
-    private String dateOfReceiptOfGoods; //ngày nhận hàng
+    private Date dateOfReceiptOfGoods; //ngày nhận hàng
 
     @Column(name = "orderStatus",length = 11)
     private Integer orderStatus;

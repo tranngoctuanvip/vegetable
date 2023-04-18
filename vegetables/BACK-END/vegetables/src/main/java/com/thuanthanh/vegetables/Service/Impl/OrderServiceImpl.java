@@ -1,5 +1,6 @@
 package com.thuanthanh.vegetables.Service.Impl;
 
+import com.thuanthanh.vegetables.Entity.DetailProduct;
 import com.thuanthanh.vegetables.Entity.Order;
 import com.thuanthanh.vegetables.Repository.CartRepository;
 import com.thuanthanh.vegetables.Repository.OrderRepository;
@@ -55,8 +56,8 @@ public class OrderServiceImpl implements OrderService {
     public void update(Order order, Integer id) throws ParseException {
             Order or = orderRepository.findById(id).get();
             or.setOrderStatus(order.getOrderStatus());
-            or.setDateOfReceiptOfGoods(utils.conVertDate(order.getDateOfReceiptOfGoods()));
-            or.setDeliveryDate(utils.conVertDate(order.getDeliveryDate()));
+            or.setDateOfReceiptOfGoods(new Date());
+            or.setDeliveryDate(new Date());
             orderRepository.save(or);
     }
 
@@ -67,5 +68,14 @@ public class OrderServiceImpl implements OrderService {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+    }
+
+    @Override
+    public void update_status(List<Integer> id) {
+        try{
+            orderRepository.update_status(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

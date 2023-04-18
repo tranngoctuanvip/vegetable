@@ -21,4 +21,8 @@ public interface ProductReporitory extends JpaRepository<Product,Integer> {
     @Query(value = "select p.name ,p.image ,p.price ,p.quality ,c.name as 'Category' from product p inner join category c on p.category_id =c.id \n" +
             "\twhere p.status =1 and p.deleted =0 and c.deleted = 0 and c.status =1 and (:pname is null or p.name like :pname)",nativeQuery = true)
     List<Map<String,Object>> search(@Param("pname") String pname);
+
+    @Query(value = "SELECT p2.name ,p2.image ,p2.price ,p2.quality FROM cart c2 join orderv o2 on o2.cart_id = c2.id \n" +
+            "     join product p2 on c2.product_id = p2.id where o2.order_status = 2 and c2.status =1 and c2.deleted = 0 order by c2.quality desc limit 5",nativeQuery = true)
+    List<Map<String,Object>> productsell();
 }

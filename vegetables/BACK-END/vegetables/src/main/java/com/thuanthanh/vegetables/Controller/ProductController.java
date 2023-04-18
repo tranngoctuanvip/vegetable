@@ -55,4 +55,12 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("productsell")
+    public ResponseEntity<?> productsell(){
+        try {
+            return new ResponseEntity<>(productService.productsell(),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

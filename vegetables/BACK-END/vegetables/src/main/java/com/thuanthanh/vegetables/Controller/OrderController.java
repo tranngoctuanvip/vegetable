@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("Order")
@@ -31,7 +33,7 @@ public class OrderController {
             orderService.update(order,id);
             return ResponseEntity.ok("update Order success!");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -48,6 +50,15 @@ public class OrderController {
     public ResponseEntity<?> getall(@RequestParam Integer urid){
         try{
             return new ResponseEntity<>(orderService.getAll(urid),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("updatestatus")
+    public ResponseEntity<?> updatestatus(@RequestParam List<Integer> id){
+        try {
+            orderService.update_status(id);
+            return ResponseEntity.ok("Update order status success!");
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

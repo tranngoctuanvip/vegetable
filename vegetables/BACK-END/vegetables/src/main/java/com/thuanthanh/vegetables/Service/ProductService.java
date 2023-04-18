@@ -10,4 +10,5 @@ public interface ProductService {
     void add(Product product, Integer id,Integer cid);
     Product update(Product product, Integer prid);
     List<Map<String,Object>> search(String pname);
+    List<Map<String,Object>> productsell();
 }

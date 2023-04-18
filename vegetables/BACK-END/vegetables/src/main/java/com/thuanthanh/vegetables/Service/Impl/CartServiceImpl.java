@@ -5,6 +5,8 @@ import com.thuanthanh.vegetables.Repository.CartRepository;
 import com.thuanthanh.vegetables.Repository.ProductReporitory;
 import com.thuanthanh.vegetables.Repository.UserRepository;
 import com.thuanthanh.vegetables.Service.CartService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Service("CartService")
 public class CartServiceImpl implements CartService {
+    public static final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
     @Autowired
     private CartRepository cartRepository;
     @Autowired
@@ -31,13 +34,18 @@ public class CartServiceImpl implements CartService {
             c.setUser(userRepository.findById(urid).get());
             return cartRepository.save(c);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 
     @Override
     public void delete(List<Integer> id) {
-        cartRepository.delete(id);
+        try{
+            cartRepository.delete(id);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
     }
 
     @Override
@@ -45,7 +53,8 @@ public class CartServiceImpl implements CartService {
         try{
             return cartRepository.sumtotal(urid);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 
@@ -55,7 +64,8 @@ public class CartServiceImpl implements CartService {
             List<Cart> carts = cartRepository.getall(urid);
             return carts;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 }

@@ -4,6 +4,8 @@ import com.thuanthanh.vegetables.Entity.Category;
 import com.thuanthanh.vegetables.Repository.CategoryRepository;
 import com.thuanthanh.vegetables.Service.CategoryService;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,9 @@ import java.util.Date;
 import java.util.List;
 @Service("CategoryService")
 public class CategoryServiceImpl implements CategoryService {
+    public static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Override
     public Category save(Category category) {
         try {
@@ -27,7 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
             ca.setCreateTime(new Date());
             return categoryRepository.save(ca);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 
@@ -42,7 +45,8 @@ public class CategoryServiceImpl implements CategoryService {
             categories.setUpdateTime(new Date());
             return categoryRepository.save(categories);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 
@@ -51,7 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
         try{
             categoryRepository.delete(id);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
         }
     }
 
@@ -61,7 +65,8 @@ public class CategoryServiceImpl implements CategoryService {
           List<Category> categories = categoryRepository.search(name);
           return categories;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return null;
         }
     }
 }

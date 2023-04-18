@@ -2,7 +2,6 @@ package com.thuanthanh.vegetables.StringUtil;
 
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,8 +28,10 @@ public class Utils {
         }
         return str;
     }
-    public String conVertDate(String date) throws ParseException {
-        Date Da = new SimpleDateFormat("dd/MM/yyyy").parse(date);
-        return String.valueOf(Da);
+    public String conVertDate(String date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = new Date();
+        date = simpleDateFormat.format(date1);
+        return date;
     }
 }
