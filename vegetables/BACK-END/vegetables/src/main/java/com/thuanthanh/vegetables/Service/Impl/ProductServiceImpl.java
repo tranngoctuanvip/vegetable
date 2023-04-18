@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void add(Product product, Integer id,Integer cid) {
+    public void add(Product product,Integer cid) {
         try {
             Product pr = new Product();
             pr.setName(product.getName());
@@ -90,6 +91,36 @@ public class ProductServiceImpl implements ProductService {
     public List<Map<String, Object>> productsell() {
         try {
             return productReporitory.productsell();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Object[]> searchbyprice(Integer start, Integer end) {
+        try {
+            List<Product> result = new ArrayList<>();
+            List<Object[]> rows = productReporitory.searchbyprice(start,end);
+            if(!rows.isEmpty() && rows != null){
+                for(Object[] row : rows){
+                    Product product = new Product();
+                    if(row[0] != null){
+                        product.setName(product.getName());
+                    }
+                    if(row[1] != null){
+                        product.setPrice(product.getPrice());
+                    }
+                    if(row[2] != null){
+                        product.setQuality(product.getQuality());
+                    }
+                    if(row[3] != null){
+                        product.setImage(product.getImage());
+                    }
+                    result.add(product);
+                }
+            }
+            return rows;
         } catch (Exception e) {
             logger.error(e.getMessage());
             return null;

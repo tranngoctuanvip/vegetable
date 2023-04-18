@@ -43,7 +43,6 @@ public class AuthController {
     private JwtProvider jwtProvider;
     @Autowired
     private RoleService roleService;
-
     private Utils utils = new Utils();
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signupForm){

@@ -33,7 +33,6 @@ public class Product {
     private Integer status;
     @Column(name = "deleted",length = 10)
     private Integer deleted;
-
     @ManyToOne
     @JoinColumn(name = "categoryId")
     private Category categoryId;

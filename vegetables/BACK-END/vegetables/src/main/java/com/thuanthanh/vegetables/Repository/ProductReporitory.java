@@ -25,4 +25,7 @@ public interface ProductReporitory extends JpaRepository<Product,Integer> {
     @Query(value = "SELECT p2.name ,p2.image ,p2.price ,p2.quality FROM cart c2 join orderv o2 on o2.cart_id = c2.id \n" +
             "     join product p2 on c2.product_id = p2.id where o2.order_status = 2 and c2.status =1 and c2.deleted = 0 order by c2.quality desc limit 5",nativeQuery = true)
     List<Map<String,Object>> productsell();
+
+    @Query(value = "select p.name, p.price ,p.quality, p.image from product p where p.price between :start and :end and p.status =1 and p.deleted = 0",nativeQuery = true)
+    List<Object[]> searchbyprice(@Param("start") Integer start,@Param("end") Integer end);
 }

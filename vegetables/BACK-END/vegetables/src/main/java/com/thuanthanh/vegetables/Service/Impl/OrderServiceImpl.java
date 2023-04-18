@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void update(Order order, Integer id) throws ParseException {
+    public void update(Order order, Integer id){
             Order or = orderRepository.findById(id).get();
             or.setOrderStatus(order.getOrderStatus());
             or.setDateOfReceiptOfGoods(new Date());
